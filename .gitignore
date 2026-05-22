@@ -1,0 +1,10 @@
+kit/
+ckpts/
+logs/
+__pycache__/
+*.pyc
+*.pyo
+submission*.zip
+_submission_tmp/
+.DS_Store
+*.pth
