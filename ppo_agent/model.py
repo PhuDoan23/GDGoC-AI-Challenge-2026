@@ -108,7 +108,11 @@ class BomberNet(nn.Module):
 
 def _best_device() -> str:
     if torch.cuda.is_available():
-        return "cuda"
+        # P100 and older cards are sm_60; PyTorch 2.1+ requires sm_70+
+        cap = torch.cuda.get_device_capability(0)
+        if cap[0] >= 7:
+            return "cuda"
+        print(f"[device] GPU sm_{cap[0]}{cap[1]} not supported by this PyTorch build — falling back to CPU")
     if torch.backends.mps.is_available():
         return "mps"
     return "cpu"
